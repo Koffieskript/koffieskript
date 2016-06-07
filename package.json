@@ -1,0 +1,55 @@
+{
+  "name": "koffieskript",
+  "version": "1.0.0",
+  "description": "A web application to empower employees to notify cleaners in the building when something is dirty",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run serve:dev",
+    "serve:dev": "babel-node ./src/server/server.js",
+    "build": "rimraf dist && NODE_ENV=production webpack",
+    "serve:prod": "NODE_ENV=production node dist/server.bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdreg95/koffieskript.git"
+  },
+  "keywords": [
+    "hago",
+    "cleaners",
+    "hogeschool",
+    "rotterdam",
+    "javascript",
+    "node.js",
+    "es2015",
+    "scss"
+  ],
+  "author": "Jori Regter, Arjo Bruijnes, Ian Wensink, Lennart de Wit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdreg95/koffieskript/issues"
+  },
+  "homepage": "https://github.com/jdreg95/koffieskript#readme",
+  "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.13.4",
+    "http": "0.0.0",
+    "pug": "^2.0.0-beta2",
+    "socket.io": "^1.4.6"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "fs": "0.0.2",
+    "node-sass": "^3.7.0",
+    "sass-loader": "^3.2.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0"
+  }
+}
