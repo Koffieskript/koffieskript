@@ -6,7 +6,7 @@ const IS_DEV = process.env.NODE_ENV !== 'production';
 
 const serverConfig = {
   debug: true,
-  entry: [`${__dirname}/src/server/server.js`],
+  entry: ['babel-polyfill', `${__dirname}/src/server/server.js`],
   output: {
     path: `${__dirname}/dist/`,
     filename: 'server.bundle.js'

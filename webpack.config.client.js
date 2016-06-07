@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const IS_DEV = process.env.NODE_ENV !== 'production';
 
 const clientConfig = {
-  entry: [`${__dirname}/src/client/app.js`],
+  entry: ['babel-polyfill', `${__dirname}/src/client/app.js`],
   output: {
     path: `${__dirname}/dist/static`,
     publicPath: '/static',
