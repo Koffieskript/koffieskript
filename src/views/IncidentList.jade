@@ -1,0 +1,12 @@
+section#incident-list
+  ul.mdl-list
+    each incident in incidents
+      li.mdl-list__item.mdl-list__item--two-line.content(class="#{incident.status}")
+        span.mdl-ripple
+        span.mdl-list__item-primary-content
+          i.material-icons.mdl-list__item-icon= incident.icon?incident.icon:"free_breakfast"
+          span= incident.category.title
+          span.mdl-list__item-sub-title= incident.location
+        span.mdl-list__item-secondary-content
+          span.mdl-list__item-secondary-info= incident.timestamp
+          span.mdl-list__item-secondary-info= incident.cleaner?incident.cleaner.name:""

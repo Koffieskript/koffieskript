@@ -1,0 +1,128 @@
+/**
+ * material-design-lite - Material Design Components in CSS, JS and HTML
+ * @version v1.0.6
+ * @license Apache-2.0
+ * @copyright 2015 Google, Inc.
+ * @link https://github.com/google/material-design-lite
+ */
+.mdl-dialog {
+  display: block;
+  width: 85%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  left: 0;
+  z-index: 11;
+  box-shadow: 0 9px 46px 8px rgba(0, 0, 0, .14), 0 11px 15px -7px rgba(0, 0, 0, .12), 0 24px 38px 3px rgba(0, 0, 0, .2);
+  overflow-y: auto;
+  transition: 0.2s opacity ease-in-out;
+  opacity: 0;
+  max-height: 90%;
+}
+
+.mdl-dialog.mdl-dialog-visible {
+  opacity: 1;
+}
+
+.mdl-dialog.mdl-dialog-bottomsheet {
+  top: initial;
+  transform: none;
+  max-height: calc(100% - 56px);
+  width: 100%;
+  transition: 0.2s bottom ease-in-out, 0s opacity;
+  opacity: 1;
+}
+
+.mdl-dialog.mdl-dialog-bottomsheet.mdl-dialog-visible {
+  bottom: 0 !important;
+}
+
+.mdl-dialog h3.dialog-heading {
+  font-size: 20px;
+  line-height: 1;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.mdl-dialog:not([open]) {
+  display: none;
+}
+
+.mdl-dialog:not(.mdl-dialog-bottomsheet) {
+  bottom: initial !important;
+}
+
+.mdl-dialog::-webkit-backdrop {
+  background-color: rgba(0, 0, 0, .55);
+}
+
+.mdl-dialog::backdrop {
+  background-color: rgba(0, 0, 0, .55);
+}
+
+.mdl-dialog-backdrop {
+  background-color: rgba(0, 0, 0, .55);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.mdl-dialog-backdrop.visible {
+  opacity: 1;
+}
+
+.mdl-dialog__title {
+  padding: 24px 24px 0;
+}
+
+.mdl-dialog__actions {
+  padding: 8px 8px 8px 24px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.mdl-dialog__actions * {
+  margin-right: 8px;
+  height: 36px;
+}
+
+.mdl-dialog__actions *:last-child {
+  margin-right: 0;
+}
+
+.mdl-dialog__actions--full-width {
+  padding: 0 0 8px;
+}
+
+.mdl-dialog__actions--full-width * {
+  height: 48px;
+  -webkit-flex: 0 0 100%;
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  padding-right: 16px;
+  margin-right: 0;
+  text-align: right;
+}
+
+.mdl-dialog__content {
+  padding: 20px 24px 24px;
+  color: rgba(0, 0, 0, .54);
+}

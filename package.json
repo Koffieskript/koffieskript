@@ -33,8 +33,10 @@
     "compression": "^1.6.2",
     "express": "^4.13.4",
     "http": "0.0.0",
+    "jade": "^1.11.0",
     "pug": "^2.0.0-beta2",
-    "socket.io": "^1.4.6"
+    "socket.io": "^1.4.6",
+    "socket.io-client": "latest"
   },
   "devDependencies": {
     "babel": "^6.5.2",

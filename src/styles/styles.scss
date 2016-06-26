@@ -1,3 +1,3 @@
-body {
-  color: red;
-}
+@import '_general.scss';
+@import 'modules/_header.scss';
+@import 'modules/_dialog';

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const IS_DEV = process.env.NODE_ENV !== 'production';
 
 const clientConfig = {
@@ -10,7 +11,11 @@ const clientConfig = {
     filename: 'bundle.js'
   },
   plugins: [
-    new ExtractTextPlugin('style.css')
+    new ExtractTextPlugin('style.css'),
+    new CopyWebpackPlugin([{
+      from: './src/views',
+      to: './views'
+    }])
   ],
   module: {
     loaders: [
@@ -47,6 +52,6 @@ if (IS_DEV) {
       }
     })
   );
-};
+}
 
-module.exports = clientConfig
+module.exports = clientConfig;

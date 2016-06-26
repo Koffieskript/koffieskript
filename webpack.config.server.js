@@ -1,6 +1,5 @@
 const fs = require('fs');
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const IS_DEV = process.env.NODE_ENV !== 'production';
 
@@ -12,12 +11,7 @@ const serverConfig = {
     filename: 'server.bundle.js'
   },
   target: 'node',
-  plugins: [
-    new CopyWebpackPlugin([{
-      from: './src/views',
-      to: './views'
-    }])
-  ],
+  plugins: [],
   module: {
     loaders: [
       {

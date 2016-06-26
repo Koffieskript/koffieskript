@@ -10,7 +10,7 @@ const io = socket(server);
 
 app.use(configureServer());
 
-app.set('view engine', 'pug');
+app.set('view engine', 'jade');
 app.set('views', `${__dirname}/../views`);
 console.log(`${__dirname}/../views`);
 
@@ -26,10 +26,18 @@ server.listen(PORT, error => {
   }
 });
 
+const cleaners = [];
+
 io.on('connection', socket => {
-  console.log("IO connected");
-  socket.emit('news', { hello: 'world' });
-  socket.on('news', data => {
-    console.log(data);
+  socket.on("register", function() {
+    cleaners.push(socket.id);
+  });
+  socket.on("unregister", function() {
+    cleaners.splice(cleaners.indexOf(socket.id), 1);
+  });
+  socket.on('incident', data => {
+    cleaners.forEach(cleaner => {
+      socket.to(cleaner).emit('incident', data);
+    });
   });
 });
