@@ -1,7 +1,7 @@
 section#incident-list
   ul.mdl-list
     each incident in incidents
-      li.mdl-list__item.mdl-list__item--two-line.content(class="#{incident.status}")
+      li.mdl-list__item.mdl-list__item--two-line.content.incident-list__item(class="#{incident.status}")
         span.mdl-ripple
         span.mdl-list__item-primary-content
           i.material-icons.mdl-list__item-icon= incident.icon?incident.icon:"free_breakfast"

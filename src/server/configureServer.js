@@ -15,14 +15,9 @@ export default function configureServer() {
     const compiler = webpack(config);
     const middleware = webpackDevMiddleware(compiler, {
       publicPath: config.output.publicPath,
-      noInfo: true,
-      stats: {
-        colors: true
-      }
+      noInfo: true
     });
-
-    console.log(config.output.publicPath, "Test");
-
+    
     app.use(middleware);
     app.use(webpackHotMiddleware(compiler));
   } else {
