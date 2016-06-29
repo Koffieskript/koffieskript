@@ -66,4 +66,21 @@ io.on('connection', socket => {
         io.sockets.emit('update_list');
       });
   });
+
+  socket.on('resolve', incident => {
+    const date = moment.tz('Europe/Amsterdam').format();
+
+    const options = {
+      method: 'put',
+      url: `http://koffieskriptapi-67341.onmodulus.net/incidents/${incident}`,
+      json: {
+        resolvedAt: date
+      }
+    };
+
+    request(options)
+      .then(() => {
+        socket.broadcast.emit('update_list')
+      })
+    })
 });

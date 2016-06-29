@@ -3,6 +3,8 @@ import io from 'socket.io-client';
 import jade from 'jade';
 import * as utils from './modules/utilities';
 import { init_incident_alert } from './modules/IncidentAlert';
+import { init_incident_detail } from './modules/IncidentDetail';
+
 const socket = io.connect('http://localhost:3000/');
 
 document.addEventListener('DOMContentLoaded', init);
