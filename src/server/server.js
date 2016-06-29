@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const server = http.Server(app);
 const io = socket(server);
+const cleaners = [];
 
 app.use(configureServer());
 
@@ -29,9 +30,8 @@ server.listen(PORT, error => {
   }
 });
 
-const cleaners = [];
-
 io.on('connection', socket => {
+
   socket.on('register', function() {
     cleaners.push(socket.id);
   });
@@ -44,9 +44,12 @@ io.on('connection', socket => {
     cleaners.forEach(cleaner => {
       socket.to(cleaner).emit('incident', data);
     });
+
+    console.log('updating list from incident');
+    socket.emit('update_list');
   });
 
-  socket.on('subscription', data => {
+  socket.on('subscribe', data => {
     const date = moment.tz('Europe/Amsterdam').format();
 
     const options = {
@@ -60,8 +63,8 @@ io.on('connection', socket => {
 
     request(options)
       .then(() => {
-        console.log("fadfadsaf");
-        socket.emit('subscription');
+        console.log('updating list from subscription');
+        socket.emit('update_list');
       });
   });
 });

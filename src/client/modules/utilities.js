@@ -1,8 +1,6 @@
 import jade from 'jade';
 import io from 'socket.io-client';
 
-const socket = io.connect();
-
 export const base_url = 'https://koffieskriptapi-67341.onmodulus.net';
 export const cleaner_id = '1a0a6f67-a594-4e3d-8d58-c253f2c0351d';
 
@@ -36,11 +34,4 @@ export function renderTemplate (view, data, selector = '#content') {
       document.querySelector(selector).innerHTML = jade.render(htmlString, data);
       componentHandler.upgradeAllRegistered();
     });
-}
-
-export function subscribe_to_incident(incident) {
-  socket.emit('subscription', {
-    incident: incident._id,
-    cleaner: cleaner_id
-  });
 }

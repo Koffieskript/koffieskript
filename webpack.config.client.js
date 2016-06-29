@@ -15,6 +15,9 @@ const clientConfig = {
     new CopyWebpackPlugin([{
       from: './src/views',
       to: './views'
+    }, {
+      from: './src/img',
+      to: './img'
     }])
   ],
   module: {

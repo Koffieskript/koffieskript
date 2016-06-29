@@ -1,19 +1,12 @@
 import * as utils from './utilities';
 import { init_incident_detail } from './IncidentDetail';
 import jade from 'jade';
-import io from 'socket.io-client';
 
-const socket = io.connect();
+let socket;
 
 export function init_incident_list(s) {
-  socket.on('subscription', data => {
-    fetch_incidents(print_incidents);
-  });
-
-  socket.on('incident', data => {
-    fetch_incidents(print_incidents);
-  });
-
+  socket = s;
+  console.log(socket);
   fetch_incidents(print_incidents);
 }
 
@@ -37,13 +30,9 @@ function print_incidents(incidents) {
     return _incident;
   });
 
-  fetch('/static/views/IncidentList.jade').then(response => {
-    return response.text();
-  }).then(htmlstring => {
-    document.querySelector('#content').innerHTML = jade.render(htmlstring, { incidents });
-    setIncidentDetailListeners(incidents);
-    componentHandler.upgradeAllRegistered();
-  });
+  document.querySelector('#list').innerHTML = jade.render(htmlstring, { incidents });
+  setIncidentDetailListeners(incidents);
+  componentHandler.upgradeAllRegistered();
 }
 
 function setIncidentDetailListeners (incidents) {
@@ -62,6 +51,6 @@ function navigateToDetail (incident) {
     .then(htmlString => {
       document.querySelector('#content').innerHTML = jade.render(htmlString, { incident });
       componentHandler.upgradeAllRegistered();
-      init_incident_detail(incident);
+      init_incident_detail(socket, incident);
     });
 }

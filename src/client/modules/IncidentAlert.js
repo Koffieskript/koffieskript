@@ -1,11 +1,9 @@
 import jade from 'jade';
 import dialog from './dialog';
 import * as utils from './utilities';
-import io from 'socket.io-client';
 
-const socket = io.connect();
 
-export function init_incident_alert(incident) {
+export function init_incident_alert(socket, incident) {
   fetch('/static/views/IncidentAlert.jade').then(response => response.text())
     .then(htmlstring => {
     const _dialog = document.querySelector('#incident-alert');
@@ -22,7 +20,7 @@ export function init_incident_alert(incident) {
     dialog.MaterialDialog.show(true);
 
     document.querySelector('#subscribe-incident-button').addEventListener('click', () => {
-      utils.subscribe_to_incident(incident)
+      utils.subscribe_to_incident(socket, incident)
       close_dialog();
     });
 
