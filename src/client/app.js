@@ -2,11 +2,8 @@ import '../styles/styles.scss';
 import io from 'socket.io-client';
 import jade from 'jade';
 import * as utils from './modules/utilities';
-import { init_incident_form } from './modules/IncidentForm';
-import { init_incident_list } from './modules/IncidentList';
 import { init_incident_alert } from './modules/IncidentAlert';
-
-const socket = io.connect();
+const socket = io.connect('http://localhost:3000/');
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -17,8 +14,7 @@ function init() {
 
   socket.on('incident', incident => {
     setTimeout(() => {
-      console.log("subscribing");
-      subscribe_to_incident(incident);
+      init_incident_alert(socket, incident);
     }, 3000);
   });
 
@@ -27,16 +23,8 @@ function init() {
   init_tab_view();
 }
 
-function subscribe_to_incident(incident) {
-  socket.emit('subscribe', {
-    incident: incident._id,
-    cleaner: utils.cleaner_id
-  });
-}
-
 
 function update_list() {
-  console.log("updating the list");
   fetch_list_view()
     .then(({jadeStringListView, incidents}) => {
       render_list_view(jadeStringListView, incidents);

@@ -35,3 +35,10 @@ export function renderTemplate (view, data, selector = '#content') {
       componentHandler.upgradeAllRegistered();
     });
 }
+
+export function subscribe_to_incident(socket, incident) {
+  socket.emit('subscribe', {
+    incident: incident._id,
+    cleaner: cleaner_id
+  });
+}
