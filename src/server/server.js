@@ -83,4 +83,24 @@ io.on('connection', socket => {
         socket.broadcast.emit('update_list')
       })
     })
+
+    socket.on('battery', () => {
+      const options = {
+        method: 'post',
+        url: `http://koffieskriptapi-67341.onmodulus.net/battery`
+      };
+
+      request(options)
+        .then(data => {
+          console.log();
+          const battery = JSON.parse(data);
+
+          if (battery.wasFull) {
+            io.sockets.emit('batteryFull', battery);
+          }
+          else {
+            io.sockets.emit('batteryCharge', battery);
+          }
+        })
+    });
 });

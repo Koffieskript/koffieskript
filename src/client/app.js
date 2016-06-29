@@ -4,6 +4,7 @@ import jade from 'jade';
 import * as utils from './modules/utilities';
 import { init_incident_alert } from './modules/IncidentAlert';
 import { init_incident_detail } from './modules/IncidentDetail';
+import { ConfettiCannon } from './modules/batteryAnimation';
 
 const socket = io.connect('http://localhost:3000/');
 
@@ -13,18 +14,38 @@ function init() {
   moment.locale(window.navigator.userLanguage || window.navigator.language);
 
   document.querySelector('#toggle-cleaner-button').addEventListener('click', toggle_cleaner);
-
   socket.on('incident', incident => {
     setTimeout(() => {
       init_incident_alert(socket, incident);
     }, 3000);
   });
 
+  socket.on('batteryCharge', charge_battery);
+  socket.on('batteryFull', full_battery);
+
   socket.on('update_list', update_list);
 
   init_tab_view();
 }
 
+function full_battery (battery) {
+  const canvas = document.getElementById('canvas')
+  let animation = new ConfettiCannon();
+  set_dismiss_confetti_button();
+}
+
+function set_dismiss_confetti_button () {
+  document.getElementById('canvas').insertAdjacentHTML('afterend', '<div id="dismiss-container" class="dismiss-button"><button id="dismiss-button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">DOEL BEREIKT</button></div>');
+
+  document.getElementById('dismiss-button').addEventListener('click', () => {
+    document.getElementById('canvas').outerHTML = '<canvas id="canvas"></canvas>';
+    document.getElementById('dismiss-container').outerHTML = '';
+  });
+}
+
+function charge_battery (battery) {
+  console.log(battery);
+}
 
 function update_list() {
   fetch_list_view()
@@ -134,6 +155,7 @@ function init_save_incident() {
   .then(incident => {
     console.log("Incident emitted");
     socket.emit('incident', incident);
+    socket.emit('battery');
   });
 }
 
