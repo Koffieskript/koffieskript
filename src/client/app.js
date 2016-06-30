@@ -14,10 +14,9 @@ function init() {
   moment.locale(window.navigator.userLanguage || window.navigator.language);
 
   document.querySelector('#toggle-cleaner-button').addEventListener('click', toggle_cleaner);
+  document.querySelector('#back-button').addEventListener('click', init_tab_view);
   socket.on('incident', incident => {
-    setTimeout(() => {
-      init_incident_alert(socket, incident);
-    }, 3000);
+    init_incident_alert(socket, incident);
   });
 
   socket.on('batteryCharge', charge_battery);
@@ -26,20 +25,22 @@ function init() {
   socket.on('update_list', update_list);
 
   init_tab_view();
+  
+  // init_incident_alert(socket, format_incidents({incidents: [{"_id":"d003af2f-e014-4999-a36f-74dd6dd3d3d9","category":{"_id":"e636ed9b-dd81-4005-b0cc-02603ae38ff3","title":"Koffie gemorst","icon":"free_breakfast","__v":0},"location":"1e verdieping, pl1.45","subscribedAt":null,"resolvedAt":null,"reportedAt":"2016-06-26T19:15:55.158Z","cleaner":{"_id":"1a0a6f67-a594-4e3d-8d58-c253f2c0351d","name":"Wenskinky is noob","__v":0}}]}).incidents[0]);
 }
 
 function full_battery (battery) {
   const canvas = document.getElementById('canvas')
-  let animation = new ConfettiCannon();
+  const animation = new ConfettiCannon();
   set_dismiss_confetti_button();
 }
 
 function set_dismiss_confetti_button () {
-  document.getElementById('canvas').insertAdjacentHTML('afterend', '<div id="dismiss-container" class="dismiss-button"><button id="dismiss-button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">DOEL BEREIKT</button></div>');
+  document.getElementById('canvas').insertAdjacentHTML('afterend', '<button id="dismiss-button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">DOEL BEREIKT</button>');
 
-  document.getElementById('dismiss-button').addEventListener('click', () => {
+  document.getElementById('dismiss-button').addEventListener('click', e => {
     document.getElementById('canvas').outerHTML = '<canvas id="canvas"></canvas>';
-    document.getElementById('dismiss-container').outerHTML = '';
+    e.target.parentNode.removeChild(e.target);
   });
 }
 
@@ -68,7 +69,7 @@ function init_tab_view() {
     .then(render_tab_view);
 }
 
-function fetch_list_view () {
+function fetch_list_view() {
   const list_view = fetch('/static/views/IncidentList.jade')
     .then(response => response.text());
 
@@ -104,7 +105,6 @@ function format_incidents (data) {
 
     return incident;
   });
-
   return data;
 }
 
@@ -116,10 +116,15 @@ function refactor_tab_data (data) {
 }
 
 function render_tab_view({jadeStringTabView, jadeStringListView, categories, incidents}) {
-  document.querySelector('#content').innerHTML = jade.render(jadeStringTabView, { categories });
+  const back_button = document.querySelector('#back-button');
+  document.querySelector('#content').innerHTML = jade.render(jadeStringTabView, { categories, active_tab: back_button.classList.contains('hidden') ? 'new': 'existing' });
   componentHandler.upgradeAllRegistered();
   render_list_view(jadeStringListView, incidents);
-  add_tab_view_listeners(incidents)
+  add_tab_view_listeners(incidents);
+  back_button.classList.toggle('hidden');
+  if (back_button.classList.contains('init')) {
+    back_button.classList.add('hidden');
+  }
 }
 
 function render_list_view(jadeStringListView, incidents) {
@@ -141,6 +146,7 @@ function add_tab_view_listeners (incidents) {
 }
 
 function navigate_to_detail (incident) {
+  document.querySelector('#back-button').classList.remove('hidden');
   fetch('/static/views/IncidentDetail.jade')
     .then(response => response.text())
     .then(htmlString => {

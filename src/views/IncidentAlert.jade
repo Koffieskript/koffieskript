@@ -1,7 +1,18 @@
 #incident-alert.mdl-dialog.mdl-js-dialog
- div.mdl-dialog__title
-   h3 Nieuw incident
- div.mdl-dialog__content
- .mdl-dialog__actions
-   button#subscribe-incident-button.mdl-button.mdl-button--raised.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(type='button') Accepteren
-   button#dismiss-alert-button.mdl-button.mdl-js-button.mdl-js-ripple-effect(type='button') Afwijzen
+  div.mdl-dialog__title
+    h3.mdl-typography--title Nieuw incident
+    span.timestamp=incident.timestamp
+  div.mdl-dialog__content
+    div.content
+      div.left
+        img(src="/static/img/warning-sign.png")
+      div.right
+        p.incident-title
+          i.material-icons=incident.category.icon
+          span=incident.category.title
+        p
+          i.material-icons location_on
+          span=incident.location
+  .mdl-dialog__actions
+    button#subscribe-incident-button.mdl-button.mdl-button--raised.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect(type='button') Accepteren
+    button#dismiss-alert-button.mdl-button.mdl-js-button.mdl-js-ripple-effect(type='button') Afwijzen

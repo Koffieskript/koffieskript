@@ -1,4 +1,9 @@
 section#incident-detail
-  h3= incident.category.title
+  p.incident-title
+    i.material-icons=incident.category.icon
+    span=incident.category.title
+  p
+    i.material-icons location_on
+    span=incident.location
   button#subscribe-to-incident-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="button") Los ik op
   button#resolve-incident-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="button") Heb ik opgelost

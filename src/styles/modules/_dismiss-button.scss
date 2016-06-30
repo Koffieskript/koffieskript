@@ -1,9 +1,7 @@
-.dismiss-button {
+#dismiss-button {
   position: fixed;
-  bottom: 0;
-  height: 100px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999999999;
 }

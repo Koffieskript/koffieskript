@@ -4,6 +4,7 @@ import * as utils from './utilities';
 
 
 export function init_incident_alert(socket, incident) {
+  console.log(incident);
   fetch('/static/views/IncidentAlert.jade').then(response => response.text())
     .then(htmlstring => {
     const _dialog = document.querySelector('#incident-alert');
@@ -12,7 +13,7 @@ export function init_incident_alert(socket, incident) {
       _dialog.parentNode.removeChild(_dialog);
     }
 
-    document.querySelector('#content').insertAdjacentHTML('afterend', jade.render(htmlstring, {incident}));
+    document.querySelector('#main').insertAdjacentHTML('afterend', jade.render(htmlstring, {incident}));
     componentHandler.upgradeAllRegistered();
 
     const dialog = document.querySelector('#incident-alert');

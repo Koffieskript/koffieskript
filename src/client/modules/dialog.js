@@ -54,8 +54,8 @@
         var t = this;
         setTimeout(function () {
             t.element_.removeAttribute('open');
-            if (document.querySelector('.mdl-dialog-backdrop.visible') && t.backdropElement_) {
-                document.body.removeChild(t.backdropElement_);
+            if (document.querySelector('.mdl-dialog-backdrop') && t.backdropElement_) {
+                document.querySelector('#wrapper').removeChild(document.querySelector('.mdl-dialog-backdrop'));
                 t.backdropElement_ = undefined;
             }
             window.location.hash = "";

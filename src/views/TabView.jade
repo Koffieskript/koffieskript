@@ -1,19 +1,20 @@
 section.mdl-tabs.mdl-js-tabs
   section.mdl-tabs__tab-bar
-    a(href='#form').mdl-tabs__tab.is-active Nieuwe aanmelding
-    a(href='#list').mdl-tabs__tab Bestaande meldingen
-  section#form.mdl-tabs__panel.is-active.mdl-grid
-    section#battery-home.battery
-      img(src="/static/img/battery.png").battery__image
-    form(action='#')#incident-form
-      div.mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label.select
-        select(name="title" required)#incident-type-field.mdl-selectfield__select
-          each category in categories
-            option(value="#{category._id}")= category.title
-        label.mdl-selectfield__label(for="incident-type-field") Selecteer een incident
-        span.mdl-selectfield__error Selecteer een incident
-      div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
-        input(type='text', name='location')#location-field.mdl-textfield__input
-        label(for='location').mdl-textfield__label Locatie
-      button(type="button")#save-incident-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect.pull--right Verzend
-  section#list.mdl-tabs__panel
+    a(href='#form' class=active_tab == "new" ? "is-active" : "").mdl-tabs__tab Nieuwe aanmelding
+    a(href='#list' class=active_tab == "existing" ? "is-active" : "").mdl-tabs__tab Bestaande meldingen
+  div#tabs-container
+    section#form.mdl-tabs__panel.mdl-grid(class=active_tab == "new" ? "active" : "")
+      section#battery-home.battery
+        img(src="/static/img/battery.png").battery__image
+      form(action='#')#incident-form
+        div.mdl-selectfield.mdl-js-selectfield.mdl-selectfield--floating-label.select
+          select(name="title" required)#incident-type-field.mdl-selectfield__select
+            each category in categories
+              option(value="#{category._id}")= category.title
+          label.mdl-selectfield__label.mdl-color-text--primary(for="incident-type-field") Selecteer een incident
+          span.mdl-selectfield__error Selecteer een incident
+        div.mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell.mdl-cell--12-col
+          input(type='text', name='location')#location-field.mdl-textfield__input
+          label(for='location').mdl-textfield__label Locatie
+        button(type="button")#save-incident-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect.pull--right Verzend
+    section#list.mdl-tabs__panel(class=active_tab == "existing" ? "is-active" : "")

@@ -6,21 +6,17 @@ html
     link(href="static/style.css", rel="stylesheet")
     meta(name="viewport" content="width=device-width, initial-scale=1")
   body
-    div.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+    div#wrapper.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
       header.mdl-layout__header.transparent-header
         div.mdl-layout__header-row
-          span.mdl-layout-title Koffiescript
+          label#back-button.mdl-button.mdl-js-button.mdl-button--icon.init.hidden
+            i.material-icons arrow_back
+          span.mdl-layout-title Koffieskript
           div.mdl-layout-spacer
-            label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for="toggle-cleaner-button")
-              input#toggle-cleaner-button.mdl-switch__input(type="checkbox")
-              span.mdl-switch__label
-      div.mdl-layout__drawer
-        span.mdl-layout-title Koffiescript
-        nav.mdl-navigation
-          a.mdl-navigation__link(href="") Link1
-          a.mdl-navigation__link(href="") Link2
-          a.mdl-navigation__link(href="") Link3
-      main.mdl-layout__content
+          label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect(for="toggle-cleaner-button")
+            input#toggle-cleaner-button.mdl-switch__input(type="checkbox")
+            span.mdl-switch__label
+      main#main.mdl-layout__content
         div#content
     canvas#canvas
     script(src='https://code.getmdl.io/1.1.3/material.min.js')

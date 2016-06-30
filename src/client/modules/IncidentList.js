@@ -6,7 +6,6 @@ let socket;
 
 export function init_incident_list(s) {
   socket = s;
-  console.log(socket);
   fetch_incidents(print_incidents);
 }
 

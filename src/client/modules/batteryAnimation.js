@@ -13,7 +13,7 @@ function getDegAngle(x0, y0, x1, y1) {
 }
 
 // some constants
-const DECAY = 4;        // confetti decay in seconds
+const DECAY = 6;        // confetti decay in seconds
 const SPREAD = 80;      // degrees to spread from the angle of the cannon
 const GRAVITY = 800;
 
@@ -75,10 +75,11 @@ export class ConfettiCannon {
     }
 
     setCanvasSize() {
+        const minus_height = 0;
         this.canvas.width = window.innerWidth * this.dpr;
-        this.canvas.height = (window.innerHeight - 100) * this.dpr;
+        this.canvas.height = (window.innerHeight - minus_height) * this.dpr;
         this.canvas.style.width = window.innerWidth + 'px';
-        this.canvas.style.height = (window.innerHeight - 100) + 'px';
+        this.canvas.style.height = (window.innerHeight - minus_height) + 'px';
     }
 
     handleMousedown(event) {

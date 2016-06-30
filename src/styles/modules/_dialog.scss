@@ -1,3 +1,38 @@
+.mdl-dialog {
+  h3 {
+    margin: 0;
+  }
+  .content {
+    display: flex;
+    -webkit-display: flex;
+  }
+  .left {
+    flex: 2;
+  }
+  .right {
+    padding-left: 16px;
+    flex: 5;
+    position: relative;
+    p {
+      font-size: 18px;
+    }
+    span {
+      position: absolute;
+      padding-left: 8px;
+    }
+  }
+  img {
+    max-width: 100%;
+  }
+  .timestamp {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 12px;
+  }
+}
+
+
 /**
  * material-design-lite - Material Design Components in CSS, JS and HTML
  * @version v1.0.6
@@ -16,7 +51,7 @@
   transform: translateY(-50%);
   right: 0;
   left: 0;
-  z-index: 11;
+  z-index: 999;
   box-shadow: 0 9px 46px 8px rgba(0, 0, 0, .14), 0 11px 15px -7px rgba(0, 0, 0, .12), 0 24px 38px 3px rgba(0, 0, 0, .2);
   overflow-y: auto;
   transition: 0.2s opacity ease-in-out;
@@ -123,6 +158,6 @@
 }
 
 .mdl-dialog__content {
-  padding: 20px 24px 24px;
+  padding: 20px;
   color: rgba(0, 0, 0, .54);
 }
