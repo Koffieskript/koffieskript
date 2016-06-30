@@ -1,7 +1,7 @@
 import jade from 'jade';
 import dialog from './dialog';
 import * as utils from './utilities';
-
+import { format_incident, navigate_to_detail } from './IncidentDetail';
 
 export function init_incident_alert(socket, incident) {
   fetch('/static/views/IncidentAlert.jade').then(response => response.text())
@@ -12,7 +12,7 @@ export function init_incident_alert(socket, incident) {
       _dialog.parentNode.removeChild(_dialog);
     }
 
-    document.querySelector('#main').insertAdjacentHTML('afterend', jade.render(htmlstring, {incident}));
+    document.querySelector('#main').insertAdjacentHTML('afterend', jade.render(htmlstring, {incident: format_incident(incident)}));
     componentHandler.upgradeAllRegistered();
 
     const dialog = document.querySelector('#incident-alert');
@@ -20,7 +20,8 @@ export function init_incident_alert(socket, incident) {
     dialog.MaterialDialog.show(true);
 
     document.querySelector('#subscribe-incident-button').addEventListener('click', () => {
-      utils.subscribe_to_incident(socket, incident)
+      utils.subscribe_to_incident(socket, incident);
+      navigate_to_detail(socket, incident);
       close_dialog();
     });
 

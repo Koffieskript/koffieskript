@@ -19,7 +19,6 @@ function init() {
   document.querySelector('#toggle-cleaner-button').addEventListener('click', toggle_cleaner);
   document.querySelector('#back-button').addEventListener('click', init_tab_view);
   socket.on('incident', incident => {
-    console.log(incident);
     init_incident_alert(socket, incident);
   });
 
@@ -32,7 +31,7 @@ function init() {
 }
 
 function full_battery (battery_data) {
-  const canvas = document.getElementById('canvas')
+  const canvas = document.getElementById('canvas');
   const animation = new ConfettiCannon();
   new Audio('/static/sounds/tada.mp3').play();
   set_dismiss_confetti_button(battery_data);

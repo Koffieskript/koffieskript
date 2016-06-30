@@ -36,11 +36,11 @@ export function init_incident_detail(socket, incident) {
   });
 }
 
-export function format_incident (incident) {
+export function format_incident(incident) {
   if (incident.reportedAt) {
     const reported_at = moment(incident.reportedAt);
-    incident.timestamp = reported_at.from(moment(moment.now()));
-    incident.full_timestamp = reported_at;
+    incident.timestamp = reported_at.from(moment.now());
+    incident.full_timestamp = reported_at.format("H:mm DD-MM-YYYY");
   }
 
   if (incident.resolvedAt) {

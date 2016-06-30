@@ -8,18 +8,20 @@
 #incident-detail {
   font-size: 17px;
   color: rgba(#000, 0.7);
+  padding-bottom: 24px;
   label {
-    font-size: 14px;
+    font-size: 20px;
+    line-height: 1.2;
   }
   p {
     position: relative;
     font-size: 17px;
+    margin: 8px 0 16px;
     i {
       position: absolute;
     }
     span {
-      padding-left: 24px;
-      font-style: italic;
+      padding-left: 32px;
     }
   }
 }

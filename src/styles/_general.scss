@@ -32,6 +32,9 @@
   margin-top: 30px;
   background: rgba(255,255,255,0.6);
   padding: 16px 16px 19px;
+  .is-focused  .mdl-textfield__label {
+    color: $primary_color;
+  }
   .mdl-textfield__label {
     color: rgba(0,0,0,.46);
   }
