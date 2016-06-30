@@ -1,16 +1,24 @@
 section#incident-detail(class=incident.status)
   div#incident-detail-inner
+    label Soort
     p.incident-title
       i.material-icons=incident.category.icon
       span=incident.category.title
     if incident.location
+      label Locatie
       p
         i.material-icons location_on
         span=incident.location
+    label Status
     p
       i.material-icons done
       span=incident.status_text
+    label Tijdstip
+    p
+      i.material-icons access_time
+      span=incident.full_timestamp
     if incident.cleaner
+      label Schoonmaker
       p
         i.material-icons face
         span=incident.cleaner.name

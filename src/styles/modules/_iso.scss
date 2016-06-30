@@ -4,8 +4,33 @@
   position: relative;
 }
 
+$charge-full: #52ce17;
+$charge-normal: #5daf00;
+$charge-low: #b43d0a;
+$charge-critical: #800;
+$charge-full-highlight: #99f56d;
+$charge-normal-highlight: #8ee32d;
+$charge-low-highlight: #e86c37;
+$charge-critical-highlight: #d61e1e;
+
 @-webkit-keyframes wave {
-    50% { box-shadow: 0 0 5px rgb(88, 251, 127); }
+  0%, 100% {box-shadow: 0 0 60px $charge-full-highlight;}
+  50% { box-shadow: 0 0 5px $charge-full-highlight; }
+}
+
+@-webkit-keyframes wave--normal {
+  0%, 100% {box-shadow: 0 0 60px $charge-normal-highlight;}
+  50% { box-shadow: 0 0 5px $charge-normal-highlight; }
+}
+
+@-webkit-keyframes wave--low {
+  0%, 100% {box-shadow: 0 0 60px $charge-low-highlight;}
+  50% { box-shadow: 0 0 5px $charge-low-highlight; }
+}
+
+@-webkit-keyframes wave--critical {
+  0%, 100% {box-shadow: 0 0 60px $charge-critical-highlight;}
+  50% { box-shadow: 0 0 5px $charge-critical-highlight }
 }
 
 .iso {
@@ -21,11 +46,10 @@
 
   &__battery {
     position: absolute;
-    bottom: 177px;
+    bottom: 157px;
     left: 50%;
     // Ratio of 1:1.535
     width: 28.28%;
-    //background:  url('img/iso_battery.png') top left no-repeat;
     background-size: contain;
     transform: translateX(-50%);
 
@@ -36,7 +60,7 @@
   }
 
   &__battery-charge {
-    background: #800;
+    background: $charge-critical;
     position: absolute;
     bottom: -6.5%;
     left: 50%;
@@ -53,24 +77,12 @@
     height: 100%;
     position: absolute;
     width: 100%;
-    box-shadow: 0 0 60px rgb(88, 251, 127);
     transition: 2s;
-    -webkit-animation: wave 5s ease-in-out infinite;
 
     &--top {
-      background-color: #60e61a;
       position: relative;
       transform: translateZ(156px);
       transform-style: preserve-3d;
-      &[data-status=normal] {
-        background-color: #7dda14;
-      }
-      &[data-status=low] {
-        background-color: #de5013;
-      }
-      &[data-status=critical] {
-        background: #b60a0a;
-      }
     }
     &--left {
       width: 200px;
@@ -85,16 +97,19 @@
   &__battery-charge,
   &__cube {
     background-color: #52ce17;
-    
+    -webkit-animation: wave 5s ease-in-out infinite;
+
     &[data-status=normal] {
       background-color: #5daf00;
+      -webkit-animation: wave--normal 5s ease-in-out infinite;
     }
     &[data-status=low] {
       background-color: #b43d0a;
+      -webkit-animation: wave--low 5s ease-in-out infinite;
     }
     &[data-status=critical] {
       background-color: #800;
+      -webkit-animation: wave--critical 5s ease-in-out infinite;
     }
   }
-
 }

@@ -19,6 +19,7 @@ function init() {
   document.querySelector('#toggle-cleaner-button').addEventListener('click', toggle_cleaner);
   document.querySelector('#back-button').addEventListener('click', init_tab_view);
   socket.on('incident', incident => {
+    console.log(incident);
     init_incident_alert(socket, incident);
   });
 
