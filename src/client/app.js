@@ -143,13 +143,6 @@ function init_save_incident() {
   });
 }
 
-function getPos(el) {
-  var viewportOffset = el.getBoundingClientRect();
-  var top = viewportOffset.top;
-  var left = viewportOffset.left;
-  return {top, left};
-}
-
 function save_incident() {
   const form = document.querySelector('#incident-form');
   const category = form.querySelector('#incident-type-field');
@@ -169,10 +162,10 @@ function save_incident() {
 
 function toggle_cleaner(e) {
   const toggle = e.target;
-  toggle.classList.toggle('active');
-  if (utils.is_cleaner()) {
-    socket.emit('unregister');
-  } else {
+  if (!utils.is_cleaner()) {
     socket.emit('register');
+  } else {
+    socket.emit('unregister');
   }
+  toggle.classList.toggle('active');
 }

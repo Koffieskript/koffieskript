@@ -44,7 +44,7 @@ io.on('connection', socket => {
 
   socket.on('incident', incident => {
     io.sockets.emit('update');
-
+    
     cleaners.forEach(cleaner => {
       socket.to(cleaner).emit('incident', incident);
     });
