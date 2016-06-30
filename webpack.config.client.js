@@ -18,6 +18,9 @@ const clientConfig = {
     }, {
       from: './src/img',
       to: './img'
+    }, {
+      from: './src/sounds',
+      to: './sounds'
     }])
   ],
   module: {
