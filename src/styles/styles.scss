@@ -1,4 +1,5 @@
 @import '_general.scss';
+@import '_colors.scss';
 @import 'modules/_header.scss';
 @import 'modules/_dialog';
 @import 'modules/_select';
@@ -6,3 +7,4 @@
 @import 'modules/_battery';
 @import 'modules/_dismiss-button';
 @import 'modules/_incident';
+@import 'state/_incident-state';

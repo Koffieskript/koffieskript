@@ -1,0 +1,28 @@
+
+
+.done, .pending, .subscribed {
+  &:after {
+    content: "";
+    width: 2px;
+    height: inherit;
+    position: absolute;
+    right: 0;
+  }
+}
+.pending {
+  &:after {
+    background-color: #5BC0EB;
+  }
+}
+
+.subscribed {
+  &:after {
+    background-color: #FFBF00;
+  }
+}
+
+.done {
+  &:after {
+    background-color: #6EEB83;
+  }
+}
