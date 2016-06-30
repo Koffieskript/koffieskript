@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import jade from 'jade';
 import * as utils from './modules/utilities';
 import { init_incident_alert } from './modules/IncidentAlert';
-import { init_incident_detail } from './modules/IncidentDetail';
+import { init_incident_detail, format_incident } from './modules/IncidentDetail';
 import { ConfettiCannon } from './modules/batteryAnimation';
 
 const socket = io.connect('http://localhost:3000/');
@@ -92,20 +92,7 @@ function refactor_list_view_data (data) {
 function format_incidents (data) {
   const { incidents } = data;
 
-  data.incidents = data.incidents.map(incident => {
-    const reported_at = moment(incident.reportedAt);
-    incident.timestamp = reported_at.from(moment(moment.now()));
-
-    if (incident.resolvedAt) {
-      incident.status = ' done';
-    } else if (incident.cleaner) {
-      incident.status = ' subscribed';
-    } else {
-      incident.status = ' pending';
-    }
-
-    return incident;
-  });
+  data.incidents = data.incidents.map(format_incident);
   return data;
 }
 
@@ -130,23 +117,19 @@ function render_tab_view({jadeStringTabView, jadeStringListView, categories, inc
 
 function render_list_view(jadeStringListView, incidents) {
   document.querySelector('#list').innerHTML = jade.render(jadeStringListView, { incidents });
+  document.querySelector('#list').querySelectorAll('.incident-list__item').forEach((incident, i) => {
+    incident.addEventListener('click', () => {
+      navigate_to_detail(incidents[i]);
+    });
+  });
 }
 
-function add_tab_view_listeners (incidents) {
-  const incidentsAsHtml = document
-    .querySelector('#list')
-    .getElementsByClassName('incident-list__item');
-
-  for (let i = 0; i < incidentsAsHtml.length; i++) {
-    incidentsAsHtml[i].addEventListener('click', () => {
-      navigate_to_detail(incidents[i])
-    });
-  }
+function add_tab_view_listeners(incidents) {
 
   document.querySelector('#save-incident-button').addEventListener('click', init_save_incident);
 }
 
-function navigate_to_detail (incident) {
+function navigate_to_detail(incident) {
   document.querySelector('#back-button').classList.remove('hidden');
   fetch('/static/views/IncidentDetail.jade')
     .then(response => response.text())

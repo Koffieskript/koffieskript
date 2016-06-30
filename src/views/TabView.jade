@@ -3,7 +3,7 @@ section.mdl-tabs.mdl-js-tabs
     a(href='#form' class=active_tab == "new" ? "is-active" : "").mdl-tabs__tab Nieuwe aanmelding
     a(href='#list' class=active_tab == "existing" ? "is-active" : "").mdl-tabs__tab Bestaande meldingen
   div#tabs-container
-    section#form.mdl-tabs__panel.mdl-grid(class=active_tab == "new" ? "active" : "")
+    section#form.mdl-tabs__panel.mdl-grid(class=active_tab == "new" ? "is-active" : "")
       section#battery-home.battery
         img(src="/static/img/battery.png").battery__image
       form(action='#')#incident-form

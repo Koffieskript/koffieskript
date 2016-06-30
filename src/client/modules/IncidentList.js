@@ -1,5 +1,5 @@
 import * as utils from './utilities';
-import { init_incident_detail } from './IncidentDetail';
+import { navigate_to_detail, init_incident_detail } from './IncidentDetail';
 import jade from 'jade';
 
 let socket;
@@ -30,26 +30,16 @@ function print_incidents(incidents) {
   });
 
   document.querySelector('#list').innerHTML = jade.render(htmlstring, { incidents });
-  setIncidentDetailListeners(incidents);
+  set_incident_detail_listeners(incidents);
   componentHandler.upgradeAllRegistered();
 }
 
-function setIncidentDetailListeners (incidents) {
+function set_incident_detail_listeners (incidents) {
   const incidentsAsHtml = document
     .querySelector('#incident-list')
     .getElementsByClassName('incident-list__item');
 
   for (let i = 0; i < incidentsAsHtml.length; i++) {
-    incidentsAsHtml[i].addEventListener('click', () => { navigateToDetail(incidents[i])})
+    incidentsAsHtml[i].addEventListener('click', () => { navigate_to_detail(socket, incidents[i])})
   }
-}
-
-function navigateToDetail (incident) {
-  fetch('/static/views/IncidentDetail.jade')
-    .then(response => response.text())
-    .then(htmlString => {
-      document.querySelector('#content').innerHTML = jade.render(htmlString, { incident });
-      componentHandler.upgradeAllRegistered();
-      init_incident_detail(socket, incident);
-    });
 }

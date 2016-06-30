@@ -37,7 +37,7 @@ io.on('connection', socket => {
   });
 
   socket.on('unregister', function() {
-    cleaners.splice(cleaners.indexOf(s.id), 1);
+    cleaners.splice(cleaners.indexOf(socket.id), 1);
   });
 
   socket.on('incident', data => {
@@ -61,9 +61,9 @@ io.on('connection', socket => {
     };
 
     request(options)
-      .then(() => {
+      .then(incident => {
         console.log('updating list from subscription');
-        io.sockets.emit('update_list');
+        io.sockets.emit('update_list', incident);
       });
   });
 
@@ -79,8 +79,8 @@ io.on('connection', socket => {
     };
 
     request(options)
-      .then(() => {
-        socket.broadcast.emit('update_list')
+      .then(incident => {
+        io.sockets.emit('update_list', incident);
       })
     })
 

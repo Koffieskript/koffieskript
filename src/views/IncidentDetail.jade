@@ -1,9 +1,19 @@
-section#incident-detail
+section#incident-detail(class=incident.status)
   p.incident-title
     i.material-icons=incident.category.icon
     span=incident.category.title
   p
     i.material-icons location_on
     span=incident.location
-  button#subscribe-to-incident-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="button") Los ik op
-  button#resolve-incident-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="button") Heb ik opgelost
+  if incident.cleaner
+    p
+      i.material-icons face
+      span=incident.cleaner.name
+    p
+      i.material-icons done
+      span=incident.status_text
+      img.cleaner-image(src=incident.cleaner.imageUrl)
+  unless incident.status == "done"
+    if incident.status == "pending"
+      button#subscribe-to-incident-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="button") Los ik op
+    button#resolve-incident-button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored.mdl-js-ripple-effect(type="button") Heb ik opgelost

@@ -42,3 +42,9 @@ export function subscribe_to_incident(socket, incident) {
     cleaner: cleaner_id
   });
 }
+
+export const incident_status = {
+  DONE: 'done',
+  SUBSCRIBED: 'subscribed',
+  PENDING: 'pending'
+}
