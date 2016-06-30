@@ -84,25 +84,39 @@ io.on('connection', socket => {
       .then(incident => {
         io.sockets.emit('update', incident);
       })
-    })
+  });
 
-    socket.on('battery', () => {
-      const options = {
-        method: 'post',
-        url: `http://koffieskriptapi-67341.onmodulus.net/battery`
-      };
+  socket.on('get_battery_status', () => {
+    battery_request({
+      method: 'get',
+      url: `http://koffieskriptapi-67341.onmodulus.net/battery`
+    }, false);
+  });
 
-      request(options)
-        .then(data => {
-          console.log();
-          const battery = JSON.parse(data);
-
-          if (battery.wasFull) {
-            io.sockets.emit('batteryFull', battery);
-          }
-          else {
-            io.sockets.emit('batteryCharge', battery);
-          }
-        })
+  socket.on('battery', () => {
+    battery_request({
+      method: 'post',
+      url: `http://koffieskriptapi-67341.onmodulus.net/battery`
     });
+  });
+
+
+  function battery_request(options, post = true) {
+    request(options)
+      .then(data => {
+        console.log();
+        const battery = JSON.parse(data);
+
+        if (post && battery.wasFull) {
+          io.sockets.emit('batteryFull', battery);
+        }
+        else {
+          if (post) {
+            io.sockets.emit('batteryCharge', battery);
+          } else {
+            socket.emit('batteryCharge', battery);
+          }
+        }
+      });
+  }
 });

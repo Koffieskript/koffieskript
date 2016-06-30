@@ -4,7 +4,7 @@
 }
 
 #tabs-container {
-  height: calc(100% - 110px);
+  height: calc(100% - 105px);
   position: relative;
   overflow: hidden;
 }
@@ -26,6 +26,15 @@
 
 #form {
   left: -100%;
+}
+
+#incident-form {
+  margin-top: 30px;
+  background: rgba(255,255,255,0.6);
+  padding: 16px 16px 19px;
+  .mdl-textfield__label {
+    color: rgba(0,0,0,.46);
+  }
 }
 
 #list {

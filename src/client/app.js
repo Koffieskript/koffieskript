@@ -5,8 +5,12 @@ import * as utils from './modules/utilities';
 import { init_incident_alert } from './modules/IncidentAlert';
 import { format_incident, navigate_to_detail } from './modules/IncidentDetail';
 import { ConfettiCannon } from './modules/batteryAnimation';
+import Battery from './modules/battery';
+import $ from 'jquery';
 
 const socket = io.connect('http://localhost:3000/');
+
+let battery;
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -25,28 +29,28 @@ function init() {
   socket.on('update', update_list);
 
   init_tab_view();
-
-  // init_incident_alert(socket, format_incidents({incidents: [{"_id":"d003af2f-e014-4999-a36f-74dd6dd3d3d9","category":{"_id":"e636ed9b-dd81-4005-b0cc-02603ae38ff3","title":"Koffie gemorst","icon":"free_breakfast","__v":0},"location":"1e verdieping, pl1.45","subscribedAt":null,"resolvedAt":null,"reportedAt":"2016-06-26T19:15:55.158Z","cleaner":{"_id":"1a0a6f67-a594-4e3d-8d58-c253f2c0351d","name":"Wenskinky is noob","__v":0}}]}).incidents[0]);
 }
 
-function full_battery (battery) {
+function full_battery (battery_data) {
   const canvas = document.getElementById('canvas')
   const animation = new ConfettiCannon();
   new Audio('/static/sounds/tada.mp3').play();
-  set_dismiss_confetti_button();
+  set_dismiss_confetti_button(battery_data);
+  battery.setPercentage(100);
 }
 
-function set_dismiss_confetti_button () {
-  document.getElementById('canvas').insertAdjacentHTML('afterend', '<button id="dismiss-button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">DOEL BEREIKT</button>');
+function set_dismiss_confetti_button(battery_data) {
+  document.getElementById('canvas').insertAdjacentHTML('afterend', '<button id="dismiss-button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Doel bereikt</button>');
 
   document.getElementById('dismiss-button').addEventListener('click', e => {
     document.getElementById('canvas').outerHTML = '<canvas id="canvas"></canvas>';
     e.target.parentNode.removeChild(e.target);
+    charge_battery(battery_data);
   });
 }
 
-function charge_battery (battery) {
-  console.log(battery);
+function charge_battery(battery_data) {
+  battery.setPercentage(battery_data.batteryPercentage);
 }
 
 function update_list() {
@@ -113,6 +117,9 @@ function render_tab_view({jadeStringTabView, jadeStringListView, categories, inc
   if (back_button.classList.contains('init')) {
     back_button.classList.add('hidden');
   }
+  battery = new Battery('isoCubeTop', 'isoCubeRight', 'isoCubeLeft');
+  battery.setPercentage(0);
+  socket.emit('get_battery_status');
 }
 
 function render_list_view(jadeStringListView, incidents) {
@@ -135,6 +142,20 @@ function init_save_incident() {
     socket.emit('incident', incident);
     socket.emit('battery');
   });
+}
+
+function scroll_to_form() {
+  const position = getPos(document.querySelector('#incident-form'));
+  $('#form').animate({
+    scrollTop: position.top
+  }, 600);
+}
+
+function getPos(el) {
+  var viewportOffset = el.getBoundingClientRect();
+  var top = viewportOffset.top;
+  var left = viewportOffset.left;
+  return {top, left};
 }
 
 function save_incident() {
