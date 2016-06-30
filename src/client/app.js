@@ -39,7 +39,7 @@ function full_battery (battery_data) {
 }
 
 function set_dismiss_confetti_button(battery_data) {
-  document.getElementById('canvas').insertAdjacentHTML('afterend', '<button id="dismiss-button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Doel bereikt</button>');
+  document.getElementById('canvas').insertAdjacentHTML('afterend', '<button id="dismiss-button" class="dismiss-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Doel bereikt</button>');
 
   document.getElementById('dismiss-button').addEventListener('click', e => {
     document.getElementById('canvas').outerHTML = '<canvas id="canvas"></canvas>';
