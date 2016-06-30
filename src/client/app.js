@@ -6,7 +6,6 @@ import { init_incident_alert } from './modules/IncidentAlert';
 import { format_incident, navigate_to_detail } from './modules/IncidentDetail';
 import { ConfettiCannon } from './modules/batteryAnimation';
 import Battery from './modules/battery';
-import $ from 'jquery';
 
 const socket = io.connect('http://localhost:3000/');
 
@@ -142,13 +141,6 @@ function init_save_incident() {
     socket.emit('incident', incident);
     socket.emit('battery');
   });
-}
-
-function scroll_to_form() {
-  const position = getPos(document.querySelector('#incident-form'));
-  $('#form').animate({
-    scrollTop: position.top
-  }, 600);
 }
 
 function getPos(el) {
