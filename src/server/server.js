@@ -34,28 +34,30 @@ io.on('connection', socket => {
 
   socket.on('register', function() {
     cleaners.push(socket.id);
+    socket.emit('update');
   });
 
   socket.on('unregister', function() {
     cleaners.splice(cleaners.indexOf(socket.id), 1);
+    socket.emit('update');
   });
 
-  socket.on('incident', data => {
-    io.sockets.emit('update_list');
+  socket.on('incident', incident => {
+    io.sockets.emit('update');
 
     cleaners.forEach(cleaner => {
-      socket.to(cleaner).emit('incident', data);
+      socket.to(cleaner).emit('incident', incident);
     });
   });
 
-  socket.on('subscribe', data => {
+  socket.on('subscribe', incident => {
     const date = moment.tz('Europe/Amsterdam').format();
 
     const options = {
       method: 'put',
-      url: `http://koffieskriptapi-67341.onmodulus.net/incidents/${data.incident}`,
+      url: `http://koffieskriptapi-67341.onmodulus.net/incidents/${incident.incident}`,
       json: {
-        cleaner: data.cleaner,
+        cleaner: incident.cleaner,
         subscribedAt: date
       }
     };
@@ -63,7 +65,7 @@ io.on('connection', socket => {
     request(options)
       .then(incident => {
         console.log('updating list from subscription');
-        io.sockets.emit('update_list', incident);
+        io.sockets.emit('update', incident);
       });
   });
 
@@ -80,7 +82,7 @@ io.on('connection', socket => {
 
     request(options)
       .then(incident => {
-        io.sockets.emit('update_list', incident);
+        io.sockets.emit('update', incident);
       })
     })
 

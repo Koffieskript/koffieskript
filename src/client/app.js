@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import jade from 'jade';
 import * as utils from './modules/utilities';
 import { init_incident_alert } from './modules/IncidentAlert';
-import { init_incident_detail, format_incident } from './modules/IncidentDetail';
+import { format_incident, navigate_to_detail } from './modules/IncidentDetail';
 import { ConfettiCannon } from './modules/batteryAnimation';
 
 const socket = io.connect('http://localhost:3000/');
@@ -22,7 +22,7 @@ function init() {
   socket.on('batteryCharge', charge_battery);
   socket.on('batteryFull', full_battery);
 
-  socket.on('update_list', update_list);
+  socket.on('update', update_list);
 
   init_tab_view();
 
@@ -119,25 +119,13 @@ function render_list_view(jadeStringListView, incidents) {
   document.querySelector('#list').innerHTML = jade.render(jadeStringListView, { incidents });
   document.querySelector('#list').querySelectorAll('.incident-list__item').forEach((incident, i) => {
     incident.addEventListener('click', () => {
-      navigate_to_detail(incidents[i]);
+      navigate_to_detail(socket, incidents[i]);
     });
   });
 }
 
 function add_tab_view_listeners(incidents) {
-
   document.querySelector('#save-incident-button').addEventListener('click', init_save_incident);
-}
-
-function navigate_to_detail(incident) {
-  document.querySelector('#back-button').classList.remove('hidden');
-  fetch('/static/views/IncidentDetail.jade')
-    .then(response => response.text())
-    .then(htmlString => {
-      document.querySelector('#content').innerHTML = jade.render(htmlString, { incident });
-      componentHandler.upgradeAllRegistered();
-      init_incident_detail(socket, incident);
-    });
 }
 
 function init_save_incident() {
@@ -166,16 +154,12 @@ function save_incident() {
     });
 }
 
-
-
 function toggle_cleaner(e) {
   const toggle = e.target;
-
-  if (toggle.classList.contains('active')) {
+  toggle.classList.toggle('active');
+  if (utils.is_cleaner()) {
     socket.emit('unregister');
   } else {
     socket.emit('register');
   }
-
-  toggle.classList.toggle('active');
 }

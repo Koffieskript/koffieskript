@@ -3,10 +3,11 @@ import * as utils from './utilities';
 import jade from 'jade';
 
 export function navigate_to_detail(socket, incident) {
+  document.querySelector('#back-button').classList.remove('hidden');
   fetch('/static/views/IncidentDetail.jade')
     .then(response => response.text())
     .then(htmlString => {
-      document.querySelector('#content').innerHTML = jade.render(htmlString, { incident });
+      document.querySelector('#content').innerHTML = jade.render(htmlString, { incident, is_cleaner: utils.is_cleaner() });
       componentHandler.upgradeAllRegistered();
       init_incident_detail(socket, incident);
     });
@@ -30,7 +31,7 @@ export function init_incident_detail(socket, incident) {
     });
   }
 
-  socket.on('update_list', incident => {
+  socket.on('update', incident => {
     navigate_to_detail(socket, format_incident(incident));
   });
 }

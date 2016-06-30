@@ -48,3 +48,11 @@ export const incident_status = {
   SUBSCRIBED: 'subscribed',
   PENDING: 'pending'
 }
+
+export function is_cleaner() {
+  const toggle = document.querySelector('#toggle-cleaner-button');
+  if (toggle && toggle.classList.contains('active')) {
+    return true;
+  }
+  return false;
+}
